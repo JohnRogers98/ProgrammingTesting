@@ -7,9 +7,11 @@ namespace SimpleProgrammingTests.Features.Inky
     {
         private Story _test;
 
+        public String? CurrentQuestion { get; set; }
+
         public Boolean CanContinue => _test.canContinue;
 
-        public Boolean HasChoices 
+        public Boolean HasChoices
         { 
             get { return _test.currentChoices.Count > 0; } 
         }
@@ -22,13 +24,19 @@ namespace SimpleProgrammingTests.Features.Inky
         {
             var compiler = new Compiler(inkContent);
             _test = compiler.Compile();
+            this.Continue();
         }
 
-        public String Continue() => _test.Continue();
-
-        public void AnswerQuestion(Choice choice)
+        public String Continue()
         {
-            _test.ChooseChoiceIndex(choice.index);
+            this.CurrentQuestion = _test.Continue();
+            return this.CurrentQuestion;
         }
+
+        public void Choose(Choice choice) => _test.ChooseChoiceIndex(choice.index);
+
+        public void ChoiceSkip() => _test.ChooseChoiceIndex(0);
+
+        public void Reset() => _test.ResetState();
     }
 }

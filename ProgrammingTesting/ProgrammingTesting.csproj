@@ -72,4 +72,16 @@
 	  </Reference>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Compile Update="Pages\TestUnitworkPage.xaml.cs">
+	    <DependentUpon>TestUnitworkPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Pages\TestUnitworkPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 </Project>
