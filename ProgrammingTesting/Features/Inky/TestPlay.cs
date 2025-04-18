@@ -27,6 +27,22 @@ namespace SimpleProgrammingTests.Features.Inky
             this.Continue();
         }
 
+        public TestPlay()
+        {
+            String inkContent = Task.Run(() => LoadTestAsset()).Result;
+            var compiler = new Compiler(inkContent);
+            _test = compiler.Compile();
+            this.Continue();
+
+            async Task<String> LoadTestAsset()
+            {
+                using var stream = await FileSystem.OpenAppPackageFileAsync("Test.ink");
+                using var reader = new StreamReader(stream);
+
+                return reader.ReadToEnd();
+            }
+        }
+
         public String Continue()
         {
             this.CurrentQuestion = _test.Continue();

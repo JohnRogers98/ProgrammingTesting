@@ -1,44 +1,21 @@
-﻿using SimpleProgrammingTests.Features.Inky;
-using System.Diagnostics;
-using System.Reflection;
+﻿using ProgrammingTesting.Pages;
 
 namespace ProgrammingTesting
 {
     public partial class MainPage : ContentPage
     {
-        int count = 0;
+        private IServiceProvider _serviceProvider;
 
-        public MainPage()
+        public MainPage(IServiceProvider serviceProvider)
         {
             InitializeComponent();
-
-       
-
-
-            //var assembly = Assembly.GetExecutingAssembly();
-            //var resourceName = assembly.GetManifestResourceNames();
-            //var t = FileSystem.OpenAppPackageFileAsync("/Ink/Queen tale.ink");
-            //var a = System.IO.Path.Combine(FileSystem.Current.AppDataDirectory, "/Resources", "/Ink/Queen tale.ink");
-            //String inkContent = File.ReadAllText("C:\\Users\\John\\source\\repos\\ProgrammingTesting\\ProgrammingTesting\\Resources\\Ink\\Queen tale.ink");
-            //TestPlay test = new TestPlay(inkContent);
+            _serviceProvider = serviceProvider;
         }
 
-        async Task<String> LoadMauiAsset()
+        private async void OnStartTest(object sender, EventArgs e)
         {
-            using var stream = await FileSystem.OpenAppPackageFileAsync("QueenTale.ink");
-            using var reader = new StreamReader(stream);
-
-            return reader.ReadToEnd();
-        }
-
-        private async void OnCounterClicked(object sender, EventArgs e)
-        {
-            count++;
-            var a = await LoadMauiAsset();
-            Debug.WriteLine(a);
-            TestPlay testPlay = new TestPlay(a);
-   
-            CounterBtn.Text = $"Clicked {count} times + {testPlay.Continue()}";
+            TestUnitworkPage testUnitworkPage = _serviceProvider.GetRequiredService<TestUnitworkPage>();
+            await Shell.Current.Navigation.PushModalAsync(testUnitworkPage);
 
             SemanticScreenReader.Announce(CounterBtn.Text);
         }
