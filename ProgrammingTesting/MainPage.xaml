@@ -10,11 +10,12 @@
             <Image
                 Source="dotnet_bot.png"
                 HeightRequest="185"
-                Aspect="AspectFit"
-                SemanticProperties.Description="dot net bot in a race car number eight" />
+                Aspect="AspectFit"/>
 
+            <Label x:Name="scoreLabel"></Label>
+            
             <Button
-                x:Name="CounterBtn"
+                x:Name="beginTestButton"
                 Text="Start a test" 
                 SemanticProperties.Hint="Start a test to understand your skills as a programmer"
                 Clicked="OnStartTest"

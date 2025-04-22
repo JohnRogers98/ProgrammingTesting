@@ -1,4 +1,5 @@
 ﻿using ProgrammingTesting.Pages;
+using ProgrammingTesting.Singletons;
 
 namespace ProgrammingTesting
 {
@@ -10,14 +11,19 @@ namespace ProgrammingTesting
         {
             InitializeComponent();
             _serviceProvider = serviceProvider;
+            this.OnFocusRereshScore();
         }
+
+        private void OnFocusRereshScore() =>
+            this.Focused += (_, _) => scoreLabel.Text = $"Score - {Score.Value.ToString()}";
 
         private async void OnStartTest(object sender, EventArgs e)
         {
+            //service locator
             TestUnitworkPage testUnitworkPage = _serviceProvider.GetRequiredService<TestUnitworkPage>();
             await Shell.Current.Navigation.PushModalAsync(testUnitworkPage);
-
-            SemanticScreenReader.Announce(CounterBtn.Text);
+            
+            SemanticScreenReader.Announce(beginTestButton.Text);
         }
     }
 

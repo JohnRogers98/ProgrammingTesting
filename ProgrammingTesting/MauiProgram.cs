@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using ProgrammingTesting.Features.ScoreNotification;
 using ProgrammingTesting.Models;
 using ProgrammingTesting.Pages;
 using ProgrammingTesting.ViewModels;
@@ -21,7 +22,20 @@ public static class MauiProgram
 
 		builder.Services.AddTransient<TestPlay>();
 		builder.Services.AddTransient<TestUnitworkRepository>();
-		builder.Services.AddTransient<TestUnitworkViewModel>();
+
+        builder.Services.AddSingleton<ConsoleScoreJsonResultPrintService>();
+        builder.Services.AddSingleton<ScoreSingletonUpdateService>();
+
+        builder.Services.AddSingleton<IScoreNotificationService>(c => 
+		new ScoreNotificationAgragationService(
+			new IScoreNotificationService[]
+			{
+				c.GetRequiredService<ConsoleScoreJsonResultPrintService>(),
+				c.GetRequiredService<ScoreSingletonUpdateService>(),
+			}
+		));
+
+        builder.Services.AddTransient<TestUnitworkViewModel>();
 		builder.Services.AddTransient<TestUnitworkPage>();
 		builder.Services.AddTransient<MainPage>();
 

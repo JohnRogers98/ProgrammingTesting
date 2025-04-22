@@ -1,4 +1,5 @@
-﻿using ProgrammingTesting.Models;
+﻿using ProgrammingTesting.Features.ScoreNotification;
+using ProgrammingTesting.Models;
 using System.Collections.ObjectModel;
 
 namespace ProgrammingTesting.ViewModels
@@ -6,6 +7,10 @@ namespace ProgrammingTesting.ViewModels
     public class TestUnitworkViewModel : BaseViewModel
     {
         private IEnumerator<TestUnitwork> _testUnitworks;
+
+        private IList<TestUnitwork> _answeredTestUnitworks = new List<TestUnitwork>();
+
+        private IScoreNotificationService _scoreNotificationService;
 
         Int32 _id = Int32.MinValue;
         public Int32 Id
@@ -34,9 +39,10 @@ namespace ProgrammingTesting.ViewModels
             }
         }
 
-        public TestUnitworkViewModel(TestUnitworkRepository testRepository) 
+        public TestUnitworkViewModel(TestUnitworkRepository testRepository, IScoreNotificationService scoreNotificationService) 
         {
             _testUnitworks = testRepository.GetEnumerator();
+            _scoreNotificationService = scoreNotificationService;
 
             this.NextTestUnitwork();
         }
@@ -55,7 +61,12 @@ namespace ProgrammingTesting.ViewModels
                 return true;
             }
 
+            _scoreNotificationService.Notify(_answeredTestUnitworks);
+
             return false;
         }
+        
+        public void AddCurrentAnsweredTestToAnseredCollection() => 
+            _answeredTestUnitworks.Add(_testUnitworks.Current);
     }
 }

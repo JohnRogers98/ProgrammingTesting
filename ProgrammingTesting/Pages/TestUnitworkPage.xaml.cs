@@ -19,7 +19,8 @@ public partial class TestUnitworkPage : ContentPage
 		if (ViewModel.SelectedAnswer is null)
 			return;
 
-		Boolean isExistQuestions = ViewModel.NextTestUnitwork();
+        ViewModel.AddCurrentAnsweredTestToAnseredCollection();
+        Boolean isExistQuestions = ViewModel.NextTestUnitwork();
 
 		if (!isExistQuestions)
 		{
