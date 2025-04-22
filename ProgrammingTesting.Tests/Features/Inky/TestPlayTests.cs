@@ -3,16 +3,14 @@ using SimpleProgrammingTests.Features.Inky;
 
 namespace ProgrammingTesting.Tests.Features.Inky
 {
-    [Collection("TestsWithInkFile")]
+    [Collection("Ink")]
     public class TestPlayTests
     {
         [Fact]
         public void Is_Path_Correctly_Handled()
         {
-            //given
-            String inkContent = File.ReadAllText(@"C:\Users\John\Downloads\Test.ink");
             //when
-            TestPlay sut = new TestPlay(inkContent);
+            TestPlay sut = new TestPlay(InkTestContent.Value);
             //then
             Assert.Contains(@"What is C# ?", sut.CurrentQuestion);
         }

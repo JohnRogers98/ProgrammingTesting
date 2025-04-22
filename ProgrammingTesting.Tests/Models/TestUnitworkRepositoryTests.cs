@@ -3,16 +3,15 @@ using SimpleProgrammingTests.Features.Inky;
 
 namespace ProgrammingTesting.Tests.Models
 {
-    [Collection("TestsWithInkFile")]
+    [Collection("Ink")]
     public class TestUnitworkRepositoryTests
     {
         [Theory]
-        [InlineData(@"C:\Users\John\Downloads\Test.ink", 2, 2)]
-        public void Get_All_Unitworks_From_Test_Play(String inkFilePath, Int32 questionCount, Int32 answerCountInEachQuestion)
+        [InlineData(2, 2)]
+        public void Get_All_Unitworks_From_Test_Play( Int32 questionCount, Int32 answerCountInEachQuestion)
         {
             //given
-            String inkContent = File.ReadAllText(inkFilePath);
-            TestPlay testPlay = new TestPlay(inkContent);
+            TestPlay testPlay = new TestPlay(InkTestContent.Value);
             TestUnitworkRepository sut = new TestUnitworkRepository(testPlay);
 
             //when
@@ -25,12 +24,11 @@ namespace ProgrammingTesting.Tests.Models
         }
 
         [Theory]
-        [InlineData(@"C:\Users\John\Downloads\Test.ink", 2)]
-        public void Get_All_Unitworks_From_Test_Play_By_Coroutine(String inkFilePath, Int32 questionCount)
+        [InlineData(2)]
+        public void Get_All_Unitworks_From_Test_Play_By_Coroutine(Int32 questionCount)
         {
             //given
-            String inkContent = File.ReadAllText(inkFilePath);
-            TestPlay testPlay = new TestPlay(inkContent);
+            TestPlay testPlay = new TestPlay(InkTestContent.Value);
             TestUnitworkRepository sut = new TestUnitworkRepository(testPlay);
 
             //when
